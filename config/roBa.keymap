@@ -86,7 +86,7 @@
 &kp LCTRL  &kp LEFT_WIN  &kp LEFT_ALT  &mkp MB1  &kp BACKSPACE  &kp LANGUAGE_1      &kp SPACE    &lt 1 ENTER                             &kp LEFT_SHIFT
             >;
 
-            sensor-bindings = <&inc_dec_kp K_SCROLL_UP K_SCROLL_DOWN>;
+            sensor-bindings = <&inc_dec_kp C_AC_SCROLL_UP C_AC_SCROLL_DOWN>;
         };
 
         FUNCTION {
