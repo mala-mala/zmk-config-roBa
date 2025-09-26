@@ -150,17 +150,26 @@
 };
 // #includeのあとのあたりにスクロール量変更の定義を追記
 
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 30
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 5
 
-// combosやmacrosと同じ階層に以下のbihaviorsを追記
-// スクロール方向を逆にしたい場合は <&msc SCRL_DOWN> と <&msc SCRL_UP> を入れ替えてください
-
+/ {
     behaviors {
-        encoder_msc_down_up: encoder_msc_down_up {
-            compatible = "zmk,behavior-sensor-rotate";
-            label = "ENCODER_MSC_DOWN_UP";
-            #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-            tap-ms = <20>;
+        rot_scrl: rot_scrl {
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&msc>, <&msc>;
         };
+    };
+
+    keymap {
+        base {
+            bindings = <
+                // 普通のキー配列がここにある
+            >;
+
+            // エンコーダー回転の割り当て
+            sensor-bindings = <&rot_scrl SCRL_UP SCRL_DOWN>;
+        };
+    };
+};
 
