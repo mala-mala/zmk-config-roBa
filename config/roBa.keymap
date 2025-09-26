@@ -73,7 +73,14 @@
             #binding-cells = <2>;
             tapping-term-ms = <200>;
         };
+        rot_scrl: rot_scrl {
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&msc>, <&msc>;
+        };
+
     };
+
 
     keymap {
         compatible = "zmk,keymap";
@@ -86,7 +93,8 @@
 &kp LCTRL  &kp LEFT_WIN  &kp LEFT_ALT  &mkp MB1  &kp BACKSPACE  &lt 5 LANGUAGE_1      &kp SPACE        &lt 1 ENTER                             &kp LEFT_SHIFT
             >;
 
-            sensor-bindings = <&inc_dec_kp PAGE_UP PAGE_DOWN>;
+            sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
+
         };
 
         FUNCTION {
@@ -148,28 +156,3 @@
         };
     };
 };
-// #includeのあとのあたりにスクロール量変更の定義を追記
-
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 5
-
-/ {
-    behaviors {
-        rot_scrl: rot_scrl {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&msc>, <&msc>;
-        };
-    };
-
-    keymap {
-        base {
-            bindings = <
-                // 普通のキー配列がここにある
-            >;
-
-            // エンコーダー回転の割り当て
-            sensor-bindings = <&rot_scrl SCRL_UP SCRL_DOWN>;
-        };
-    };
-};
-
