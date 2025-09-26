@@ -74,6 +74,13 @@
             tapping-term-ms = <200>;
         };
     };
+        // ★ 追加：エンコーダー回転 → マウススクロール
+        rot_scrl: rot_scrl {
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&msc>, <&msc>;
+        };
+
 
     keymap {
         compatible = "zmk,keymap";
@@ -86,7 +93,9 @@
 &kp LCTRL  &kp LEFT_WIN  &kp LEFT_ALT  &mkp MB1  &kp BACKSPACE  &lt 5 LANGUAGE_1      &kp SPACE        &lt 1 ENTER                             &kp LEFT_SHIFT
             >;
 
-            sensor-bindings = <&inc_dec_kp K_SCROLL_UP C_AC_SCROLL_UP>;
+                        // ★ 置換：右回転=上スクロール（少量）／左回転=下スクロール（少量）
+            sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
+
         };
 
         FUNCTION {
