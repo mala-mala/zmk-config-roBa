@@ -129,6 +129,8 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans    &trans    &trans    &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                &trans
             >;
+   // ★これを追加（数値は好みで調整）
+    sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
         };
 
         SCROLL {
@@ -138,6 +140,8 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
+    // ★これも追加
+    sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
         };
 
         layer_6 {
