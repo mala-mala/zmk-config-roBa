@@ -25,7 +25,7 @@
     // };
 };
 
-/ {
+ / {
     combos {
         compatible = "zmk,combos";
 
@@ -64,22 +64,23 @@
         };
     };
 
+    /* ====== ここから behaviors（1個に統一）====== */
     behaviors {
-
-        // エンコーダー回転 → 可変パラメータで呼べる
+        // エンコーダー回転 → 可変パラメータで呼べる（スクロール用）
         rot_scrl: rot_scrl {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
             bindings = <&msc>, <&msc>;
         };
 
-        // ★ 診断用：回したら A/B をタイプする（後で無効化OK）
+        // 診断用：回したら A/B をタイプ（必要なら後で消してOK）
         rot_kp: sensor_rotate_kp {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
             bindings = <&kp>, <&kp>;
         };
- 
+    };
+    /* ====== behaviors ここまで ====== */
 
     keymap {
         compatible = "zmk,keymap";
@@ -92,10 +93,10 @@
 &kp LCTRL  &kp LEFT_WIN  &kp LEFT_ALT  &mkp MB1  &kp BACKSPACE  &lt 5 LANGUAGE_1      &kp SPACE        &lt 1 ENTER                             &kp LEFT_SHIFT
             >;
 
-
-            // 右回転=上スクロール（少量）／左回転=下スクロール（少量）
-sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
-
+            // ★ 本命：エンコーダー回転でスクロール（右=上 / 左=下）
+            sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
+            // もしまず診断したければ↓に切り替え（回すと A/B をタイプ）
+            // sensor-bindings = <&rot_kp A B>;
         };
 
         FUNCTION {
@@ -136,8 +137,9 @@ sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans    &trans    &trans    &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                &trans
             >;
-   // ★これを追加（数値は好みで調整）
-    sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
+
+            // マウス自動レイヤー時もスクロールを有効に
+            sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
         };
 
         SCROLL {
@@ -147,8 +149,9 @@ sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
-    // ★これも追加
-    sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
+
+            // スクロールレイヤー時も同様
+            sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
         };
 
         layer_6 {
