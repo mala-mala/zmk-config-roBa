@@ -1,28 +1,16 @@
 #include "roBa.dtsi"
 
-/* 列ピン（左）：SPI CS(0,9)とは被らせない構成のまま */
 &kscan0 {
-    col-gpios
-        = <&xiao_d 10 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 9  GPIO_ACTIVE_HIGH>
-        , <&xiao_d 8  GPIO_ACTIVE_HIGH>
-        , <&xiao_d 7  GPIO_ACTIVE_HIGH>
-        , <&gpio0 10 GPIO_ACTIVE_HIGH>
-        ;
+        col-gpios
+            = <&xiao_d 10 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 9 GPIO_ACTIVE_HIGH> 
+            , <&xiao_d 8 GPIO_ACTIVE_HIGH> 
+            , <&xiao_d 7 GPIO_ACTIVE_HIGH> 
+            , <&gpio0 10 GPIO_ACTIVE_HIGH>
+            , <&gpio0 9 GPIO_ACTIVE_HIGH>
+            ;
 };
 
-/* encoders をこの overlay 内で新規定義（ラベルは left_encoder） */
-&{/} {
-    encoders {
-        compatible = "zmk,encoders";
-
-        left_encoder: encoder_left {
-            compatible = "alps,ec11";
-            /* ★kscan/SPI/IRQと不重複な空きDピン2本を選ぶ。例として D6 と D1 */
-            a-gpios = <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-            b-gpios = <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-            resolution = <4>;
-            status = "okay";
-        };
-    };
+&left_encoder {
+    status = "okay";
 };
