@@ -64,19 +64,28 @@
         };
     };
 
+  / {
+    /* ……（combos, macros はそのまま）…… */
+
+    /* ▼▼ ここから behaviors は1個だけに統一 ▼▼ */
     behaviors {
-    };
+        /* 他に behaviors があれば中へ移動する */
 
-    // ★ 追加：エンコーダー回転 → マウススクロール
-
-        behaviors {
-        // ★ 追加：エンコーダー回転 → マウススクロール
+        // エンコーダー回転 → 可変パラメータで呼べる
         rot_scrl: rot_scrl {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
             bindings = <&msc>, <&msc>;
         };
+
+        // ★ 診断用：回したら A/B をタイプする（後で無効化OK）
+        rot_kp: sensor_rotate_kp {
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+        };
     };
+    /* ▲▲ behaviors はここだけ ▲▲ */
 
 
     keymap {
