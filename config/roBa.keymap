@@ -64,6 +64,22 @@
         };
     };
 
+    /* ===== スクロール用/診断用ビヘイビア ===== */
+    behaviors {
+        // 回転に可変引数を渡せる（本命：マウススクロールを呼ぶ）
+        rot_scrl: rot_scrl {
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&msc>, <&msc>;
+        };
+
+        // 診断用（必要なら一時的に使う）：回すと文字A/Bをタイプ
+        rot_kp: rot_kp {
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+        };
+    }
 
     keymap {
         compatible = "zmk,keymap";
@@ -76,7 +92,11 @@
 &kp LCTRL  &kp LEFT_WIN  &kp LEFT_ALT  &mkp MB1  &kp BACKSPACE  &lt 5 LANGUAGE_1      &kp SPACE        &lt 1 ENTER                             &kp LEFT_SHIFT
             >;
 
-            
+            // エンコーダ回転 → スクロール（右=上 / 左=下、幅は小さめ）
+            sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
+            // ※向きが逆に感じたら 3 と -3 を入れ替えてね
+            // ※まず動作診断したい時は下を有効化（回して A/B が出るか確認）
+            // sensor-bindings = <&rot_kp A B>;
         };
 
         FUNCTION {
@@ -118,7 +138,8 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                &trans
             >;
 
-            
+            // automouse-layer 有効中もスクロールを維持
+            sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
         };
 
         SCROLL {
@@ -129,7 +150,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
 
-            
+            sensor-bindings = <&rot_scrl MOVE_Y(3) MOVE_Y(-3)>;
         };
 
         layer_6 {
