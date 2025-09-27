@@ -65,11 +65,11 @@
 
         encoder0: encoder_0 {
             compatible = "alps,ec11";
-            a-gpios = <&gpio0 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-            b-gpios = <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+            // ★ XIAOのDピンを直接使う（GPIOコントローラは &xiao_d）
+            a-gpios = <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+            b-gpios = <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
             resolution = <4>;
             status = "okay";
         };
     };
 };
-
