@@ -15,15 +15,21 @@
     status = "okay";
 };
 / {
-  encoders {
-    compatible = "zmk,encoders";
+    encoders {
+        compatible = "zmk,encoders";
 
-    encoder0: encoder_0 {
-      compatible = "alps,ec11";
-      status = "disabled";  // ★一時的に無効化
-      // a-gpios = <...>;
-      // b-gpios = <...>;
-      // resolution = <4>;
+        encoder0: encoder_0 {
+            compatible = "alps,ec11";
+
+            // ▼エンコーダのA/B相を XIAO の空きDピンへ
+            //   D3 と D4 が空いている前提（別のDピンを使うなら数字だけ変えてOK）
+            a-gpios = <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+            b-gpios = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+
+            // 1デテントあたりのパルス数（EC11なら 4 が一般的）
+            resolution = <4>;
+
+            status = "okay";
+        };
     };
-  };
 };
