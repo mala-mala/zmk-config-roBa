@@ -14,3 +14,16 @@
 &left_encoder {
     status = "okay";
 };
+/ {
+  encoders {
+    compatible = "zmk,encoders";
+
+    encoder0: encoder_0 {
+      compatible = "alps,ec11";
+      status = "disabled";  // ★一時的に無効化
+      // a-gpios = <...>;
+      // b-gpios = <...>;
+      // resolution = <4>;
+    };
+  };
+};
