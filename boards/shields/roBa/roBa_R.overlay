@@ -4,38 +4,41 @@
     col-offset = <6>;
 };
 
+/* 列ピン：CS(0,9)や他デバイスと衝突しない構成 */
 &kscan0 {
-        col-gpios
-            = <&xiao_d 10 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 9 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 8 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 7 GPIO_ACTIVE_HIGH>
-            , <&gpio0 10 GPIO_ACTIVE_HIGH>
-            ;
+    col-gpios
+        = <&xiao_d 10 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 9  GPIO_ACTIVE_HIGH>
+        , <&xiao_d 8  GPIO_ACTIVE_HIGH>
+        , <&xiao_d 7  GPIO_ACTIVE_HIGH>
+        , <&gpio0 10 GPIO_ACTIVE_HIGH>
+        ;
 };
 
-/ {
+/* トラックボールの入力リスナー（右保持前提） */
+&{/} {
     trackball_listener {
         status = "okay";
         compatible = "zmk,input-listener";
         device = <&trackball>;
     };
-};
+}
 
+/* SPI ピン定義：★MISO を MOSI と別ピンに修正（例：0,6） */
 &pinctrl {
     spi0_default: spi0_default {
         group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
-                <NRF_PSEL(SPIM_MOSI, 0, 4)>,
-                <NRF_PSEL(SPIM_MISO, 0, 4)>;
+            psels = <NRF_PSEL(SPIM_SCK,  0, 5)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 4)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 6)>;   /* ← ここを実配線に合わせて！ */
         };
     };
 
     spi0_sleep: spi0_sleep {
         group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
-                <NRF_PSEL(SPIM_MOSI, 0, 4)>,
-                <NRF_PSEL(SPIM_MISO, 0, 4)>;
+            psels = <NRF_PSEL(SPIM_SCK,  0, 5)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 4)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 6)>;   /* ← 同上 */
             low-power-enable;
         };
     };
@@ -43,6 +46,7 @@
 
 &xiao_serial { status = "disabled"; };
 
+/* トラックボール本体（CS=0,9 / IRQ=0,2 はそのまま） */
 &spi0 {
     status = "okay";
     compatible = "nordic,nrf-spim";
