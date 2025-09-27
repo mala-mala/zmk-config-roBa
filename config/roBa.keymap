@@ -64,12 +64,7 @@
         };
     };
 
-  / {
-    /* ……（combos, macros はそのまま）…… */
-
-    /* ▼▼ ここから behaviors は1個だけに統一 ▼▼ */
     behaviors {
-        /* 他に behaviors があれば中へ移動する */
 
         // エンコーダー回転 → 可変パラメータで呼べる
         rot_scrl: rot_scrl {
@@ -84,9 +79,7 @@
             #sensor-binding-cells = <2>;
             bindings = <&kp>, <&kp>;
         };
-    };
-    /* ▲▲ behaviors はここだけ ▲▲ */
-
+ 
 
     keymap {
         compatible = "zmk,keymap";
